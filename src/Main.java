@@ -1,115 +1,51 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.Format;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Main {
-
-    public static String[][] arr = {
-            {".", "o", ".", "o", ".", "o", ".", "o"},
-            {".", ".", ".", ".", ".", ".", ".", "."},
-            {".", ".", ".", ".", ".", ".", ".", "."},
-            {".", ".", ".", ".", ".", ".", ".", "."}};
-
-
-
+    static int n;  //столбцы
+    static int m;  //строки
     public static void main(String[] args) {
-        String[][]rotatedArr = povorotNa90GradPochas(arr);
 
-        List<List> list = findObjects(arr);
-        List<List> list2 = findObjects(povorotNa90GradPochas(arr));
+        BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
+        ArrayList<String> list = new ArrayList();
+        boolean string_exist = true;
+        int iter = 0;
+        String buf = new String();
 
-        printResult(list);
-        printResult(list2);
-
-    }
-
-    public static List findObjects(String[][] arr){
-
-        List<List<String[]>> list = new ArrayList<>();
-        List<String[]> list1 = new ArrayList<>();
-
-        for (int i = 0; i < arr.length; i++) {
-            String[] strings = arr[i];
-
-            if (ifO(strings)==false) {
-                list1.add(strings);
-                continue;
+        while (string_exist){
+            try {
+                buf = scanner.readLine();
             }
-
-            else if (ifO(strings)==true && howManyO(strings)==1){
-                list1.add(strings);
-                list.add(list1);
-                list1=new ArrayList<>();
-                continue;
+            catch (IOException e){
+                System.out.println(e.toString());
             }
-
-            else if (ifO(strings)==true && howManyO(strings)>1){
-                return new ArrayList();
-
+            if (buf.equals("")){
+                string_exist = false;
+                break;
             }
-
-        }
-
-        return list;
-    }
-
-    public static boolean checkObjects(List<List> list){
-        if (list.equals(null)) return false;
-        else {
-            for (int i = 0; i < list.size() - 1; i++) {
-                if (list.get(i).size() == list.get(i + 1).size()) continue;
-                else return false;
+            else {
+                list.add(buf);
+                iter++;
             }
         }
-        return true;
-    }
+        if (iter > 0)
+        n = list.get(0).length();
+        else n = 0;
+        m = iter;
+        System.out.println("n = "+n+", m = "+m);
 
-    public static void printResult (List<List> list){
-        for (int i = 0; i < list.size(); i++) {
-            List<String[]> lll = list.get(i);
-            for (int j = 0; j < lll.size(); j++) {
-                String[] arr = lll.get(j);
-                for (int k = 0; k < arr.length; k++) {
-                    System.out.print(arr[k]);
-
-                }
-                System.out.println();
+        char[][] achar = new char[n][m];
+        for (int i = 0; i < m; i++){
+            achar[i] = list.get(i).toCharArray();
+        }
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++) {
+                System.out.println(achar[i][j]);
             }
-            System.out.println();
-
         }
-    }
-
-    public static boolean ifO(String[] arr){
-        for (int i = 0; i < arr.length; i++) {
-            String s = arr[i];
-            if (!s.equals("o")) continue;
-            if (s.equals("o")) return true;
-
-        }
-        return false;
-    }
-
-    public static int howManyO(String[] arr){
-        int o = 0;
-        for (int i = 0; i < arr.length; i++) {
-            String s = arr[i];
-            if (s.equals("o")) o += 1;
-        }
-        return o;
-    }
-
-    public static String[][] povorotNa90GradPochas (String[][] arr){
-        int n = arr[0].length;//8
-        int m = arr.length;//4
-        String[][] resultArr = new String[n][m];
-
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[0].length; j++) {
-                resultArr[j][i] = arr[i][j];
-
-            }
-
-        }
-        return resultArr;
     }
 }
