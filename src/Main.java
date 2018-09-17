@@ -12,6 +12,9 @@ public class Main {
 
         BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<String> list = new ArrayList();
+        ArrayList<Integer> columns = new ArrayList();
+        ArrayList<Integer> rows = new ArrayList();
+        int count_o = 0;
         boolean string_exist = true;
         int iter = 0;
         String buf = new String();
@@ -37,6 +40,7 @@ public class Main {
         else n = 0;
         m = iter;
         System.out.println("n = "+n+", m = "+m);
+        if ((n > 100)|| (m > 100)) return;
 
         char[][] achar = new char[n][m];
         for (int i = 0; i < m; i++){
@@ -44,9 +48,19 @@ public class Main {
         }
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++) {
-                System.out.print(achar[i][j]);
+                //System.out.print(achar[i][j]);
+                if (achar[i][j] == 'o') {
+                    count_o++;
+                    columns.add(j);
+                    rows.add(i);
+                }
+                else continue;
             }
-            System.out.print("\n");
+        }
+        System.out.println("Элементов \"о\": "+count_o);
+        for (int i = 0; i < count_o; i++) {
+            System.out.println(""+(i+1)+"-й член \"о\": "+rows.get(i)+", "+columns.get(i)+".");
+
         }
     }
 }
